@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
+import { addToCart } from "../redux/cartSlice";
 
 
 function Details(){
@@ -10,7 +12,13 @@ function Details(){
         axios.get(`https://fakestoreapi.com/products/${id}`).then((product)=>{
             setProduct(product.data);
         })
-    })
+    }, [id])
+    
+    const dispatch = useDispatch();
+    function handleAddToCart(){
+        dispatch(addToCart(product))
+    }
+
     return(
         <>
             <div className="mt-14 w-[700px] mx-auto bg-neutral-50 p-4 mb-14">
@@ -23,6 +31,7 @@ function Details(){
                         <div className="flex gap-4 mt-4">
                             <button className="border border-black bg-black text-white py-3 px-5">Purchase Now</button>
                             <button className="border border-black bg-white text-black py-3 px-5">Add to Wishlist</button>
+                            <button onClick={handleAddToCart} className="border border-black bg-white text-black py-3 px-5">Add to Cart</button>
                         </div>
                     </div>
                 </div>
