@@ -1,9 +1,15 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { removeFromCart } from '../redux/cartSlice'
 
 function Cart() {
     const {items} = useSelector((state)=>state.cart)
+
+    const dispatch = useDispatch();
+  function handleRemoveFromCart(){
+      dispatch(removeFromCart(item.id))
+  }
   return (
     <div>
       <div className="w-200 mx-auto mt-10">
@@ -17,7 +23,7 @@ function Cart() {
                             <h2 className='text-lg font-medium'>{item.title}</h2>
                             <p className='text-xs text-neutral-700 line-clamp-2'>{item.description}</p>
                             <p className='font-semibold text-lg'>Rs {Math.floor((item.price)*80)}</p>
-                            <button className="bg-black text-white px-3 py-2 rounded-full hover:cursor-pointer mt-3">Remove from Cart</button>
+                            <button onClick={()=>dispatch(removeFromCart(item.id))} className="bg-black text-white px-3 py-2 rounded-full hover:cursor-pointer mt-3">Remove from Cart</button>
                         </div>
                     </div>
                 </div>
